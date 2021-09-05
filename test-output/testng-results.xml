@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2021-09-05T07:39:24Z" name="Default suite" finished-at="2021-09-05T07:39:27Z" duration-ms="2536">
+    <groups>
+    </groups>
+    <test started-at="2021-09-05T07:39:24Z" name="Default test" finished-at="2021-09-05T07:39:27Z" duration-ms="2536">
+      <class name="getRequest.RestAssuredDemo">
+        <test-method signature="Test1()[pri:0, instance:getRequest.RestAssuredDemo@18df8434]" started-at="2021-09-05T10:39:24Z" name="Test1" finished-at="2021-09-05T10:39:27Z" duration-ms="2527" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Test1 -->
+      </class> <!-- getRequest.RestAssuredDemo -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
