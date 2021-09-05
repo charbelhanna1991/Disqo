@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2021-09-05T07:39:24Z" name="Default suite" finished-at="2021-09-05T07:39:27Z" duration-ms="2536">
+  <suite started-at="2021-09-05T19:13:04 EEST" name="Default suite" finished-at="2021-09-05T19:13:10 EEST" duration-ms="6568">
     <groups>
     </groups>
-    <test started-at="2021-09-05T07:39:24Z" name="Default test" finished-at="2021-09-05T07:39:27Z" duration-ms="2536">
-      <class name="getRequest.RestAssuredDemo">
-        <test-method signature="Test1()[pri:0, instance:getRequest.RestAssuredDemo@18df8434]" started-at="2021-09-05T10:39:24Z" name="Test1" finished-at="2021-09-05T10:39:27Z" duration-ms="2527" status="PASS">
+    <test started-at="2021-09-05T19:13:04 EEST" name="Default test" finished-at="2021-09-05T19:13:10 EEST" duration-ms="6568">
+      <class name="Default.APIGetUsers">
+        <test-method is-config="true" signature="login()[pri:0, instance:Default.APIGetUsers@31d7b7bf]" started-at="2021-09-05T19:12:56 EEST" name="login" finished-at="2021-09-05T19:13:04 EEST" duration-ms="8199" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- login -->
+        <test-method signature="Test1()[pri:0, instance:Default.APIGetUsers@31d7b7bf]" started-at="2021-09-05T19:13:04 EEST" name="Test1" finished-at="2021-09-05T19:13:06 EEST" duration-ms="2354" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Test1 -->
-      </class> <!-- getRequest.RestAssuredDemo -->
+        <test-method is-config="true" signature="close()[pri:0, instance:Default.APIGetUsers@31d7b7bf]" started-at="2021-09-05T19:13:06 EEST" name="close" finished-at="2021-09-05T19:13:10 EEST" duration-ms="4194" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- close -->
+      </class> <!-- Default.APIGetUsers -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
