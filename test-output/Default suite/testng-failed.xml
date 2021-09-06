@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="Default.APIGetUsers">
+      <class name="Default.APIPostUsers">
         <methods>
-          <include name="Test1"/>
           <include name="login"/>
           <include name="close"/>
+          <include name="PostUserFail1"/>
         </methods>
-      </class> <!-- Default.APIGetUsers -->
+      </class> <!-- Default.APIPostUsers -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

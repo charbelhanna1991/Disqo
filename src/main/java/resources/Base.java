@@ -3,9 +3,15 @@ package resources;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.json.simple.JSONObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,40 +19,39 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class Base {
-	 
+	
+	private Properties prop;
+	private Connection con;
 	private WebDriver driver;
 	private String username;
 	private String password;
 	private String web;
 	
-	public String getUsername()
+	public JSONObject postBody(int id, String name, String email, String gender,String status) throws SQLException, IOException
 	{
-		return username;
+		con= getConnection();
+		Statement s = con.createStatement();
+		JSONObject json =new JSONObject();
+		json.put("id", id);
+		json.put("name", name);
+		json.put("email", email);
+		json.put("gender", gender);
+		json.put("status", status);
+		return json;
 	}
 	
-	public WebDriver getDriver()
-	{
-		return driver;
-	}
 	
-	public String getPassword()
+	public void initializeDriver() throws IOException, SQLException
 	{
-		return password;
-	}
-	public String getWeb()
-	{
-		return web;
-	}
-	public void initializeDriver() throws IOException
-	{
+
 		
-		
-		Properties prop = new Properties();
+		prop = new Properties();
 		FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\resources\\data.properties");
 		
 		prop.load(fis);
 		username = prop.getProperty("username");
 		password = prop.getProperty("password");
+
 		web=prop.getProperty("url");
 
 		//mvn test -Dbrowser=chrome
@@ -80,5 +85,30 @@ public class Base {
 			driver=new InternetExplorerDriver();
 		}
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	}
+	public String getUsername()
+	{
+		return username;
+	}
+	
+	public WebDriver getDriver()
+	{
+		return driver;
+	}
+	
+	public String getPassword()
+	{
+		return password;
+	}
+	public String getWeb()
+	{
+		return web;
+	}
+	public Connection getConnection() throws SQLException
+	{
+		String port = prop.getProperty("port");
+		String host = prop.getProperty("host");
+		Connection con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/testingdb", "root", "P@ssw0rd");
+		return con;
 	}
 }
