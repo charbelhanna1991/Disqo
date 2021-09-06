@@ -18,18 +18,32 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
+import pageObject.LandingPage;
+import pageObject.LoginPage;
+import pageObject.RedirectionPage;
+import pageObject.TokenPage;
+
 public class Base {
-	
-	private Properties prop;
-	private Connection con;
+
 	private WebDriver driver;
-	private String username;
-	private String password;
-	private String web;
+	private static Properties prop;
+	private static String username;
+	private static String password;
+	private static String web;
+	private static String token;
+	
+	
+	public Connection getConnection() throws SQLException
+	{
+		String port = prop.getProperty("port");
+		String host = prop.getProperty("host");
+		Connection con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/testingdb", "root", "P@ssw0rd");
+		return con;
+	}
 	
 	public JSONObject postBody(int id, String name, String email, String gender,String status) throws SQLException, IOException
 	{
-		con= getConnection();
+		Connection con= getConnection();
 		Statement s = con.createStatement();
 		JSONObject json =new JSONObject();
 		json.put("id", id);
@@ -40,6 +54,33 @@ public class Base {
 		return json;
 	}
 	
+	public String getTokenMethod() throws IOException, SQLException
+	{
+		if (token!=null)
+		{
+			return token;
+			
+		}
+		
+		initializeDriver();
+		driver.get(getWeb());
+		
+		LandingPage l = new LandingPage(driver);
+		l.getlogin().click();
+		
+		LoginPage lp = new LoginPage(driver);
+		lp.getloginGithub().click();
+		
+		RedirectionPage rp = new RedirectionPage(driver);
+		rp.getusername().sendKeys(getUsername());
+		rp.getpassword().sendKeys(getPassword());
+		rp.getlogin().click();
+		
+		TokenPage tp = new TokenPage(driver);
+		token = tp.gettoken().getText();
+		driver.close();
+		return token;
+	}
 	
 	public void initializeDriver() throws IOException, SQLException
 	{
@@ -91,11 +132,6 @@ public class Base {
 		return username;
 	}
 	
-	public WebDriver getDriver()
-	{
-		return driver;
-	}
-	
 	public String getPassword()
 	{
 		return password;
@@ -104,11 +140,5 @@ public class Base {
 	{
 		return web;
 	}
-	public Connection getConnection() throws SQLException
-	{
-		String port = prop.getProperty("port");
-		String host = prop.getProperty("host");
-		Connection con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/testingdb", "root", "P@ssw0rd");
-		return con;
-	}
+
 }

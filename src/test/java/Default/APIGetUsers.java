@@ -28,35 +28,14 @@ import resources.Base;
 
 public class APIGetUsers extends Base{
 
-	private String Token;
 	
-	@BeforeClass
-	public void login() throws IOException, SQLException
-	{
-	
-		initializeDriver();
-		getDriver().get(getWeb());
-		
-		LandingPage l = new LandingPage(getDriver());
-		l.getlogin().click();
-		
-		LoginPage lp = new LoginPage(getDriver());
-		lp.getloginGithub().click();
-		
-		RedirectionPage rp = new RedirectionPage(getDriver());
-		rp.getusername().sendKeys(getUsername());
-		rp.getpassword().sendKeys(getPassword());
-		rp.getlogin().click();
-		
-		TokenPage tp = new TokenPage(getDriver());
-		this.Token = tp.gettoken().getText();
-	}
+
 	
 	@Test
-	public void GetUserPass1() throws SQLException, IOException
+	public void GetUserPass() throws SQLException, IOException
 	{
-		
-		RequestSpecification request =RestAssured.given().auth().oauth2(this.Token)
+		System.out.println(getTokenMethod());
+		RequestSpecification request =RestAssured.given().auth().oauth2(getTokenMethod())
 				.header("Content-Type","application/json");
 		
 		
@@ -74,7 +53,6 @@ public class APIGetUsers extends Base{
 		Response resp= request.get(getWeb()+"public/v1/users/"+id);
 		int code = resp.getStatusCode();
 		Assert.assertEquals(code, 200);
-		System.out.println(resp.body().asString());
 		
 
 	}
@@ -82,11 +60,10 @@ public class APIGetUsers extends Base{
 	@Test
 	public void GetUserFail() throws SQLException, IOException
 	{
-		
-		RequestSpecification request =RestAssured.given().auth().oauth2(this.Token)
+		System.out.println(getTokenMethod());
+		RequestSpecification request =RestAssured.given().auth().oauth2(getTokenMethod())
 				.header("Content-Type","application/json");
-		
-		
+				
 		Connection con=getConnection();
 		Statement s = con.createStatement();
 	 	ResultSet rs= s.executeQuery("SELECT  * FROM testingdb.users where PostedByEndpoint=0");
@@ -101,15 +78,8 @@ public class APIGetUsers extends Base{
 		Response resp= request.get(getWeb()+"public/v1/users/"+id);
 		int code = resp.getStatusCode();
 		Assert.assertEquals(code, 404);
-		System.out.println(resp.body().asString());
 		
-
 	}
 	
-	@AfterClass
-	public void close() 
-	{
-		getDriver().close();
-		
-	}
+	
 }
