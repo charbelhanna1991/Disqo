@@ -56,8 +56,8 @@ public class APIPostUsers extends Base{
 		int recordID=resp.jsonPath().get("data.id"); // capture the id from the API response because the id in the API 
 		//is different than the one in the DB in order to be able to use it later for other calls
 		//System.out.println(recordID);
-		int rs1 =s.executeUpdate("update users set id=" + recordID + ",PostedByEndpoint=1 where id="+id);
-		
+		s.executeUpdate("update users set id=" + recordID + ",PostedByEndpoint=1 where id="+id);
+		Assert.assertEquals(code, 201);
 	} 
 	
 	@Test
@@ -87,11 +87,7 @@ public class APIPostUsers extends Base{
 		Response resp= request.post(getWeb()+"public/v1/users");
 		int code = resp.getStatusCode();
 		Assert.assertEquals(code, 422);
-		//int recordID=resp.jsonPath().get("data.id"); // capture the id from the API response because the id in the API 
-		//is different than the one in the DB in order to be able to use it later for other calls
-		//System.out.println(recordID);
-		//int rs1 =s.executeUpdate("update users set id=" + recordID + ",PostedByEndpoint=1 where id="+id);
-		
+	
 	} 
 	
 	@Test
@@ -121,11 +117,7 @@ public class APIPostUsers extends Base{
 		Response resp= request.post(getWeb()+"public/v1/users");
 		int code = resp.getStatusCode();
 		Assert.assertEquals(code, 422);
-		//int recordID=resp.jsonPath().get("data.id"); // capture the id from the API response because the id in the API 
-		//is different than the one in the DB in order to be able to use it later for other calls
-		//System.out.println(recordID);
-		//int rs1 =s.executeUpdate("update users set id=" + recordID + ",PostedByEndpoint=1 where id="+id);
-		
+	
 	} 
 			
 
