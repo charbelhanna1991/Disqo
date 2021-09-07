@@ -34,7 +34,7 @@ public class APIGetUsers extends Base{
 	@Test
 	public void GetUserPass() throws SQLException, IOException
 	{
-		System.out.println(getTokenMethod());
+
 		RequestSpecification request =RestAssured.given().auth().oauth2(getTokenMethod())
 				.header("Content-Type","application/json");
 		
@@ -58,15 +58,39 @@ public class APIGetUsers extends Base{
 	}
 	
 	@Test
-	public void GetUserFail() throws SQLException, IOException
+	public void GetUserFail1() throws SQLException, IOException
 	{
-		System.out.println(getTokenMethod());
+
 		RequestSpecification request =RestAssured.given().auth().oauth2(getTokenMethod())
 				.header("Content-Type","application/json");
 				
 		Connection con=getConnection();
 		Statement s = con.createStatement();
 	 	ResultSet rs= s.executeQuery("SELECT  * FROM testingdb.users where PostedByEndpoint=0");
+	 	
+	 	int id = 0;
+	 	
+	 	while (rs.next())
+	 	{
+	 		id=rs.getInt("id");
+	 	}
+
+		Response resp= request.get(getWeb()+"public/v1/users/"+id);
+		int code = resp.getStatusCode();
+		Assert.assertEquals(code, 404);
+		
+	}
+	
+	@Test
+	public void GetUserFail2() throws SQLException, IOException
+	{
+
+		RequestSpecification request =RestAssured.given().auth().oauth2(getTokenMethod())
+				.header("Content-Type","application/json");
+				
+		Connection con=getConnection();
+		Statement s = con.createStatement();
+	 	ResultSet rs= s.executeQuery("SELECT  * FROM testingdb.users where PostedByEndpoint=2");
 	 	
 	 	int id = 0;
 	 	
