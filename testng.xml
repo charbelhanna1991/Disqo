@@ -3,7 +3,8 @@
 <suite name="Suite">
   <test thread-count="5" name="Test">
     <classes>
-
+      <class name="Default.APIDeleteUsers"/>
+      <class name="Default.APIUpdatetUsers"/>
       <class name="Default.APIGetUsers"/>
       <class name="Default.APIPostUsers"/>
     </classes>
